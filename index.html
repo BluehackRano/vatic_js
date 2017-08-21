@@ -36,6 +36,8 @@
       .center-drag {
         left: 50%;
         top: 50%;
+        width: 30px;
+        height: 80px;
         transform: translate(-50%, -50%);
         cursor: move;
       }
@@ -204,6 +206,8 @@
       let speedInput = document.querySelector('#speed');
       let sliderElement = document.querySelector('#slider');
       let generateXmlButton = document.querySelector('#generateXml');
+
+      var videoName;
       var imgWidth;
       var imgHeight;
 
@@ -407,7 +411,7 @@
         let totalFrames = framesManager.frames.totalFrames();
         for (let i = 0; i < totalFrames; i++) {
           framesManager.frames.getFrame(i).then((blob) => {
-            zip.file('video_1_' + i + '.jpg', blob);
+            zip.file(videoName + '_' + i + '.jpg', blob);
 
             processed++;
             if (processed == totalFrames) {
@@ -446,6 +450,8 @@
         let promise;
         if (this == videoFile) {
           let dimensionsInitialized = false;
+
+          videoName = this.files[0].name
 
           promise = extractFramesFromVideo(
             config,
@@ -739,7 +745,7 @@
 
         console.log(xml)
 
-        let writeStream = streamSaver.createWriteStream('video_1.xml').getWriter();
+        let writeStream = streamSaver.createWriteStream(videoName + '.xml').getWriter();
         let encoder = new TextEncoder();
         writeStream.write(encoder.encode(xml));
         writeStream.close();
