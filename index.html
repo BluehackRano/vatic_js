@@ -714,8 +714,8 @@
 
               xml += '    ';
               xml += '<bndbox>';
-              xml += '   <xmin>' + bbox.x + '</xmin>';
-              xml += '   <ymin>' + bbox.y + '</ymin>';<l>' + isGroundThrugh + '</l></pt>';
+              xml += '<t>' + frameNumber + '</t>';
+              xml += '<pt><x>' + bbox.x + '</x><y>' + bbox.y + '</y><l>' + isGroundThrugh + '</l></pt>';
               xml += '<pt><x>' + bbox.x + '</x><y>' + (bbox.y + bbox.height) + '</y><l>' + isGroundThrugh + '</l></pt>';
               xml += '<pt><x>' + (bbox.x + bbox.width) + '</x><y>' + (bbox.y + bbox.height) + '</y><l>' + isGroundThrugh + '</l></pt>';
               xml += '<pt><x>' + (bbox.x + bbox.width) + '</x><y>' + bbox.y + '</y><l>' + isGroundThrugh + '</l></pt>';
