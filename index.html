@@ -724,7 +724,7 @@
             xml += '    <truncated>0</truncated>\n';
             xml += '    <occluded>0</occluded>\n';
 
-            let annotatedFrame = annotatedObject.get(j);
+            let annotatedFrame = annotatedObject.get(i);
             if (annotatedFrame == null) {
               window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
               return;
