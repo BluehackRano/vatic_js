@@ -118,14 +118,14 @@
     <h1>vatic.js A pure Javascript video annotation tool</h1>
 
     <ol>
-      <li>
-        <p>This tool can be used to easily annotate a video, without having to install anything.</p>
-        <p>Optical flow is used to track your annotations, so that have to do as little work as possible ;-)</p>
-        <p>This tool works best in Chrome, and has also been successfully tested in Firefox.</p>
-      </li>
+      <!--<li>-->
+        <!--<p>This tool can be used to easily annotate a video, without having to install anything.</p>-->
+        <!--<p>Optical flow is used to track your annotations, so that have to do as little work as possible ;-)</p>-->
+        <!--<p>This tool works best in Chrome, and has also been successfully tested in Firefox.</p>-->
+      <!--</li>-->
       <li>
         <p>To start a new video annotation, select a video file: <input type="file" id="videoFile" accept="video/*" /></p>
-        <p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>
+        <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
         <p>Note: Keep the focus on the browser during the entire extraction process, or frames might be skipped.</p>
         <p class="output" id="videoDimensions"></p>
         <p class="output" id="extractionProgress"></p>
@@ -133,21 +133,16 @@
       <li>
         <p>Download the extracted frames zip archive: <input type="button" id="downloadFrames" value="Get frames zip archive" disabled="disabled" /></p>
       </li>
+      <!--<li>-->
+        <!--<p>Optional: Load an existing <a href="http://web.mit.edu/vondrick/vatic/" target="new">vatic</a>-compatible XML annotation file: <input type="file" id="xmlFile" accept=".xml" disabled="true" /></p>-->
+        <!--<p>This is useful for example if:</p>-->
+        <!--<ul>-->
+          <!--<li>You are resuming a previous annotation.</li>-->
+          <!--<li>You already have a first version of your automatic object detector, which you want to improve by manually correcting its errors.</li>-->
+        <!--</ul>-->
+        <!--<p>Note: Launch your object detector on the extracted frames rather than on the original video to avoid frame/annotation mismatches!</p>-->
+      <!--</li>-->
       <li>
-        <p>Optional: Load an existing <a href="http://web.mit.edu/vondrick/vatic/" target="new">vatic</a>-compatible XML annotation file: <input type="file" id="xmlFile" accept=".xml" disabled="true" /></p>
-        <p>This is useful for example if:</p>
-        <ul>
-          <li>You are resuming a previous annotation.</li>
-          <li>You already have a first version of your automatic object detector, which you want to improve by manually correcting its errors.</li>
-        </ul>
-        <p>Note: Launch your object detector on the extracted frames rather than on the original video to avoid frame/annotation mismatches!</p>
-      </li>
-      <li>
-        <p>Manually annotate the frame sequence:</p>
-        <p>To create a new bounding box, first click 'n' (for new), and then left click on two locations in the video corresponding to the corners of the box.</p>
-        <p>Tip: Use the spacebar to play/pause the video, and the left and right arrows to navigate frame by frame.</p>
-        <p>Tip: The visibility of each object can be toogled with its visiblity checkbox under the video.</p>
-        <p>Tip: Zoom in with your browser to place the bounding boxes more accurately.</p>
         <div id="doodle">
           <canvas id="canvas"></canvas>
         </div>
@@ -155,6 +150,12 @@
         <div id="slider"></div>
         <p><label for="speed">Speed multiplier: </label><input type="text" id="speed" value="1.00" size="4" /></p>
         <div id="objects"></div>
+        <br>
+        <p>Manually annotate the frame sequence:</p>
+        <p>To create a new bounding box, first click 'n' (for new), and then left click on two locations in the video corresponding to the corners of the box.</p>
+        <p>Tip: Use the spacebar to play/pause the video, and the left and right arrows to navigate frame by frame.</p>
+        <p>Tip: The visibility of each object can be toogled with its visiblity checkbox under the video.</p>
+        <p>Tip: Zoom in with your browser to place the bounding boxes more accurately.</p>
       </li>
       <li>
         <p><input type="button" id="generateXml" value="Generate" disabled="true" /> the <a href="http://web.mit.edu/vondrick/vatic/" target="new">vatic</a>-compatible XML annotations file.</p>
