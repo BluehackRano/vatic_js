@@ -692,63 +692,135 @@
       }
 
       function generateXml() {
-        let xml = '<?xml version="1.0" encoding="utf-8"?>\n';
-        xml += '<annotation>\n';
-        xml += '  <folder>LOL</folder>\n';
-        xml += '  <filename>Video_01</filename>\n';
-        xml += '  <source>\n';
-        xml += '    <database>WhatsIt Database</database>\n';
-        xml += '    <annotation>WhatsIt LOL</annotation>\n';
-        xml += '    <image>whatsit</image>\n';
-        xml += '  </source>\n';
-        xml += '  <size>\n';
-        xml += '    <width>' + imgWidth + '</width>\n';
-        xml += '    <height>' + imgHeight + '<</height>\n';
-        xml += '    <depth>3</depth>\n';
-        xml += '  </size>\n';
 
-        let totalFrames = framesManager.frames.totalFrames();
-        for (let i = 0; i < annotatedObjectsTracker.annotatedObjects.length; i++) {
-          let annotatedObject = annotatedObjectsTracker.annotatedObjects[i];
+        let zip = new JSZip()
+        let processed = 0
 
-          xml += '  <object>\n';
-          xml += '    <name>' + annotatedObject.name + '</name>\n';
-          xml += '    <pose>Frontal</pose>\n';
-          xml += '    <truncated>0</truncated>\n';
-          xml += '    <occluded>0</occluded>\n';
+        var xml
+        let totalFrames = framesManager.frames.totalFrames()
+        for (let i = 0; i < totalFrames; i++) {
 
-          for (let frameNumber = 0; frameNumber < totalFrames; frameNumber++) {
-            let annotatedFrame = annotatedObject.get(frameNumber);
-            if (annotatedFrame == null) {
-              window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
-              return;
+          xml = '<?xml version="1.0" encoding="utf-8"?>\n';
+          xml += '<annotation>\n';
+          xml += '  <folder>LOL</folder>\n';
+          xml += '  <filename>' + videoName + '_' + i + '</filename>\n';
+          xml += '  <source>\n';
+          xml += '    <database>WhatsIt Database</database>\n';
+          xml += '    <annotation>WhatsIt LOL</annotation>\n';
+          xml += '    <image>whatsit</image>\n';
+          xml += '  </source>\n';
+          xml += '  <size>\n';
+          xml += '    <width>' + imgWidth + '</width>\n';
+          xml += '    <height>' + imgHeight + '<</height>\n';
+          xml += '    <depth>3</depth>\n';
+          xml += '  </size>\n';
+
+          for (let i = 0; i < annotatedObjectsTracker.annotatedObjects.length; i++) {
+            let annotatedObject = annotatedObjectsTracker.annotatedObjects[i];
+
+            xml += '  <object>\n';
+            xml += '    <name>' + annotatedObject.name + '</name>\n';
+            xml += '    <pose>Frontal</pose>\n';
+            xml += '    <truncated>0</truncated>\n';
+            xml += '    <occluded>0</occluded>\n';
+
+            for (let frameNumber = 0; frameNumber < totalFrames; frameNumber++) {
+              let annotatedFrame = annotatedObject.get(frameNumber);
+              if (annotatedFrame == null) {
+                window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
+                return;
+              }
+
+              let bbox = annotatedFrame.bbox;
+              if (bbox != null) {
+                let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
+
+                xml += '    <bndbox>\n';
+                xml += '      <numframe>' + frameNumber + '</numframe>\n';
+                xml += '      <xmin>' + bbox.x + '</xmin>\n';
+                xml += '      <ymin>' + bbox.y + '</ymin>\n';
+                xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
+                xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
+                xml += '    </bndbox>\n';
+              }
             }
-
-            let bbox = annotatedFrame.bbox;
-            if (bbox != null) {
-              let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
-
-              xml += '    <bndbox>\n';
-              xml += '      <numframe>' + frameNumber + '</numframe>\n';
-              xml += '      <xmin>' + bbox.x + '</xmin>\n';
-              xml += '      <ymin>' + bbox.y + '</ymin>\n';
-              xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
-              xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
-              xml += '    </bndbox>\n';
-            }
+            xml += '    <difficult>0</difficult>\n';
+            xml += '  </object>\n';
           }
-          xml += '    <difficult>0</difficult>\n';
-          xml += '  </object>\n';
+          xml += '</annotation>\n';
+          console.log(xml)
+
+          zip.file(videoName + '_' + i + '.xml', xml)
+
+          processed++;
+          if (processed == totalFrames) {
+            let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
+            zip.generateInternalStream({type: 'uint8array', streamFiles: true})
+              .on('data', data => writeStream.write(data))
+          .on('end', () => writeStream.close())
+          .resume()
+          }
+
+          xml = ''
         }
 
-        xml += '</annotation>\n';
 
-        console.log(xml)
+//        let xml = '<?xml version="1.0" encoding="utf-8"?>\n';
+//        xml += '<annotation>\n';
+//        xml += '  <folder>LOL</folder>\n';
+//        xml += '  <filename>Video_01</filename>\n';
+//        xml += '  <source>\n';
+//        xml += '    <database>WhatsIt Database</database>\n';
+//        xml += '    <annotation>WhatsIt LOL</annotation>\n';
+//        xml += '    <image>whatsit</image>\n';
+//        xml += '  </source>\n';
+//        xml += '  <size>\n';
+//        xml += '    <width>' + imgWidth + '</width>\n';
+//        xml += '    <height>' + imgHeight + '<</height>\n';
+//        xml += '    <depth>3</depth>\n';
+//        xml += '  </size>\n';
+//
+//        let totalFrames = framesManager.frames.totalFrames();
+//        for (let i = 0; i < annotatedObjectsTracker.annotatedObjects.length; i++) {
+//          let annotatedObject = annotatedObjectsTracker.annotatedObjects[i];
+//
+//          xml += '  <object>\n';
+//          xml += '    <name>' + annotatedObject.name + '</name>\n';
+//          xml += '    <pose>Frontal</pose>\n';
+//          xml += '    <truncated>0</truncated>\n';
+//          xml += '    <occluded>0</occluded>\n';
+//
+//          for (let frameNumber = 0; frameNumber < totalFrames; frameNumber++) {
+//            let annotatedFrame = annotatedObject.get(frameNumber);
+//            if (annotatedFrame == null) {
+//              window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
+//              return;
+//            }
+//
+//            let bbox = annotatedFrame.bbox;
+//            if (bbox != null) {
+//              let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
+//
+//              xml += '    <bndbox>\n';
+//              xml += '      <numframe>' + frameNumber + '</numframe>\n';
+//              xml += '      <xmin>' + bbox.x + '</xmin>\n';
+//              xml += '      <ymin>' + bbox.y + '</ymin>\n';
+//              xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
+//              xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
+//              xml += '    </bndbox>\n';
+//            }
+//          }
+//          xml += '    <difficult>0</difficult>\n';
+//          xml += '  </object>\n';
+//        }
+//
+//        xml += '</annotation>\n';
+        
 
-        let writeStream = streamSaver.createWriteStream(videoName + '.xml').getWriter();
-        let encoder = new TextEncoder();
-        writeStream.write(encoder.encode(xml));
-        writeStream.close();
+//        let writeStream = streamSaver.createWriteStream(videoName + '.xml').getWriter();
+//        let encoder = new TextEncoder();
+//        writeStream.write(encoder.encode(xml));
+//        writeStream.close();
       }
 
       function importXml() {
