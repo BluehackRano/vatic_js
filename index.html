@@ -405,7 +405,7 @@
         let totalFrames = framesManager.frames.totalFrames();
         for (let i = 0; i < totalFrames; i++) {
           framesManager.frames.getFrame(i).then((blob) => {
-            zip.file(i + '.jpg', blob);
+            zip.file('video_1_' + i + '.jpg', blob);
 
             processed++;
             if (processed == totalFrames) {
@@ -455,6 +455,8 @@
                   initializeCanvasDimensions(img);
                 }
                 ctx.drawImage(img, 0, 0);
+
+                alert(img.width + ' / ' + img.height)
 
                 videoDimensionsElement.innerHTML = 'Video dimensions determined: ' + img.width + 'x' + img.height;
                 extractionProgressElement.innerHTML = (percentage * 100).toFixed(2) + ' % completed. ' + framesSoFar + ' frames extracted.';
@@ -690,6 +692,11 @@
         xml += '    <annotation>WhatsIt LOL</annotation>\n';
         xml += '    <image>whatsit</image>\n';
         xml += '  </source>\n';
+        xml += '  <size>\n';
+        xml += '    <width></width>\n';
+        xml += '    <height></height>\n';
+        xml += '    <depth>3</depth>\n';
+        xml += '  </size>\n';
 
         let totalFrames = framesManager.frames.totalFrames();
         for (let i = 0; i < annotatedObjectsTracker.annotatedObjects.length; i++) {
@@ -704,7 +711,7 @@
           for (let frameNumber = 0; frameNumber < totalFrames; frameNumber++) {
             let annotatedFrame = annotatedObject.get(frameNumber);
             if (annotatedFrame == null) {
-              window.alert('Play the video in full before downloading the XML so that bounding box data is available for all frames.');
+              window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
               return;
             }
 
@@ -712,17 +719,16 @@
             if (bbox != null) {
               let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
 
-              xml += '    ';
-              xml += '<bndbox>';
-              xml += '<t>' + frameNumber + '</t>';
-              xml += '<pt><x>' + bbox.x + '</x><y>' + bbox.y + '</y><l>' + isGroundThrugh + '</l></pt>';
-              xml += '<pt><x>' + bbox.x + '</x><y>' + (bbox.y + bbox.height) + '</y><l>' + isGroundThrugh + '</l></pt>';
-              xml += '<pt><x>' + (bbox.x + bbox.width) + '</x><y>' + (bbox.y + bbox.height) + '</y><l>' + isGroundThrugh + '</l></pt>';
-              xml += '<pt><x>' + (bbox.x + bbox.width) + '</x><y>' + bbox.y + '</y><l>' + isGroundThrugh + '</l></pt>';
+              xml += '<bndbox>\n';
+              xml += '<num>' + frameNumber + '</num>\n';
+              xml += '<xmin>' + bbox.x + '</xmin>\n';
+              xml += '<ymin>' + bbox.y + '</ymin>\n';
+              xml += '<xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
+              xml += '<ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
               xml += '</bndbox>\n';
             }
           }
-
+          xml += '    <difficult>0</difficult>\n';
           xml += '  </object>\n';
         }
 
@@ -730,7 +736,7 @@
 
         console.log(xml)
 
-        let writeStream = streamSaver.createWriteStream('output.xml').getWriter();
+        let writeStream = streamSaver.createWriteStream('video_1.xml').getWriter();
         let encoder = new TextEncoder();
         writeStream.write(encoder.encode(xml));
         writeStream.close();
