@@ -703,7 +703,7 @@
           xml = '<?xml version="1.0" encoding="utf-8"?>\n';
           xml += '<annotation>\n';
           xml += '  <folder>LOL</folder>\n';
-          xml += '  <filename>' + videoName + '_' + i + '</filename>\n';
+          xml += '  <filename>' + videoName + '_' + i + '.jpg</filename>\n';
           xml += '  <source>\n';
           xml += '    <database>WhatsIt Database</database>\n';
           xml += '    <annotation>WhatsIt LOL</annotation>\n';
@@ -715,8 +715,8 @@
           xml += '    <depth>3</depth>\n';
           xml += '  </size>\n';
 
-          for (let i = 0; i < annotatedObjectsTracker.annotatedObjects.length; i++) {
-            let annotatedObject = annotatedObjectsTracker.annotatedObjects[i];
+          for (let j = 0; j < annotatedObjectsTracker.annotatedObjects.length; j++) {
+            let annotatedObject = annotatedObjectsTracker.annotatedObjects[j];
 
             xml += '  <object>\n';
             xml += '    <name>' + annotatedObject.name + '</name>\n';
@@ -724,7 +724,7 @@
             xml += '    <truncated>0</truncated>\n';
             xml += '    <occluded>0</occluded>\n';
 
-            let annotatedFrame = annotatedObject.get(i);
+            let annotatedFrame = annotatedObject.get(j);
             if (annotatedFrame == null) {
               window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
               return;
@@ -739,7 +739,7 @@
               xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
               xml += '    </bndbox>\n';
             }
-            
+
             xml += '    <difficult>0</difficult>\n';
             xml += '  </object>\n';
           }
