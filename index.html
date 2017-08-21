@@ -724,26 +724,22 @@
             xml += '    <truncated>0</truncated>\n';
             xml += '    <occluded>0</occluded>\n';
 
-            for (let frameNumber = 0; frameNumber < totalFrames; frameNumber++) {
-              let annotatedFrame = annotatedObject.get(frameNumber);
-              if (annotatedFrame == null) {
-                window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
-                return;
-              }
-
-              let bbox = annotatedFrame.bbox;
-              if (bbox != null) {
-                let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
-
-                xml += '    <bndbox>\n';
-                xml += '      <numframe>' + frameNumber + '</numframe>\n';
-                xml += '      <xmin>' + bbox.x + '</xmin>\n';
-                xml += '      <ymin>' + bbox.y + '</ymin>\n';
-                xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
-                xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
-                xml += '    </bndbox>\n';
-              }
+            let annotatedFrame = annotatedObject.get(i);
+            if (annotatedFrame == null) {
+              window.alert('비디오를 처음부터 끝까지 한번 재생하세요.\nPlay the video in full before downloading the XML so that bounding box data is available for all frames.');
+              return;
             }
+
+            let bbox = annotatedFrame.bbox;
+            if (bbox != null) {
+              xml += '    <bndbox>\n';
+              xml += '      <xmin>' + bbox.x + '</xmin>\n';
+              xml += '      <ymin>' + bbox.y + '</ymin>\n';
+              xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
+              xml += '      <ymax>' + (bbox.y + bbox.height)  + '</ymax>\n';
+              xml += '    </bndbox>\n';
+            }
+            
             xml += '    <difficult>0</difficult>\n';
             xml += '  </object>\n';
           }
@@ -815,7 +811,7 @@
 //        }
 //
 //        xml += '</annotation>\n';
-        
+
 
 //        let writeStream = streamSaver.createWriteStream(videoName + '.xml').getWriter();
 //        let encoder = new TextEncoder();
