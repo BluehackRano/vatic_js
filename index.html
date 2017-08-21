@@ -451,7 +451,7 @@
         if (this == videoFile) {
           let dimensionsInitialized = false;
 
-          videoName = this.files[0].name
+          videoName = this.files[0].name.replace('.mov', '')
 
           promise = extractFramesFromVideo(
             config,
@@ -729,7 +729,7 @@
               let isGroundThrugh = annotatedFrame.isGroundTruth ? 1 : 0;
 
               xml += '    <bndbox>\n';
-              xml += '      <num>' + frameNumber + '</num>\n';
+              xml += '      <numframe>' + frameNumber + '</numframe>\n';
               xml += '      <xmin>' + bbox.x + '</xmin>\n';
               xml += '      <ymin>' + bbox.y + '</ymin>\n';
               xml += '      <xmax>' + (bbox.x + bbox.width)  + '</xmax>\n';
