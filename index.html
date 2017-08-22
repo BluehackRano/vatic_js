@@ -904,7 +904,7 @@
 
       function importXml() {
 
-        alert('aaaaaaaaaaa')
+        alert('111111111')
 
         if (this.files.length != 1) {
           console.log('here 111')
@@ -924,11 +924,15 @@
           for (var i=0; lines.length; i++) {
             csv = lines[i]
             console.log(csv)
-            xml1 = csv.replace('"', '')
-            xml = xml1.replace('"', '')
+            // xml1 = csv.replace('"', '')
+            // xml = xml1.replace('"', '')
 
-            zip.file('video_1_' + i + '.xml', xml)
+            // zip.file('video_1_' + i + '.xml', xml)
           }
+
+          xml = lines[0].trim().replace('"', '')
+          // zip.file('video_1_' + i + '.xml', xml)
+          zip.file('video_1_0.xml', xml)
 
           let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
           zip.generateInternalStream({type: 'uint8array', streamFiles: true})
