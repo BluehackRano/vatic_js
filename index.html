@@ -128,7 +128,7 @@
         <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
         <p>Select a VIDEO file >>> <input type="file" id="videoFile" accept="video/*" /></p>
         <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
-        <p>To resume a previous annotation, select a frames zip archive: <input type="file" id="xmlFile" accept=".csv" /></p>
+        <p>To resume a previous annotation, select a frames XML archive: <input type="file" id="xmlFile" accept=".csv" /></p>
         <p>Note: Keep the focus on the browser during the entire extraction process, or frames might be skipped.</p>
         <p class="output" id="videoDimensions"></p>
         <p class="output" id="extractionProgress"></p>
@@ -139,7 +139,7 @@
       </li>
       <li>
         <p>Optional: Load an existing XML annotation file: <input type="file" id="zipFile" accept=".csv" disabled="true" /></p>
-        <p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="false" /></p>
+        <!--<p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="false" /></p>-->
       </li>
         <!--<p>This is useful for example if:</p>-->
         <!--<ul>-->
@@ -914,6 +914,9 @@
         var reader = new FileReader();
         reader.onload = (e) =>
         {
+
+          console.log('HERER!!!!')
+
           if (e.target.readyState != 2) {
             console.log('here 222')
             return;
@@ -932,6 +935,8 @@
           console.log(csv)
 
         }
+
+        console.log('!!!!!!!')
       }
 
       // Keyboard shortcuts
