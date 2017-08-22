@@ -215,6 +215,7 @@
       var videoName;
       var imgWidth;
       var imgHeight;
+      var sliderPosition;
 
       let framesManager = new FramesManager();
       let annotatedObjectsTracker = new AnnotatedObjectsTracker(framesManager);
@@ -224,7 +225,7 @@
           $(sliderElement).slider('option', 'min', min);
           $(sliderElement).slider('option', 'max', max);
           $(sliderElement).on('slidestop', (e, ui) => {
-            onChange(ui.value);
+            onChange(ui.value)
           });
           $(sliderElement).slider('enable');
         },
@@ -456,7 +457,7 @@
         if (this == videoFile) {
           let dimensionsInitialized = false;
 
-          videoName = this.files[0].name.replace('.mov', '')
+          videoName = this.files[0].name.replace('.MOV', '')
 
           promise = extractFramesFromVideo(
             config,
