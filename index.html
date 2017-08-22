@@ -916,6 +916,7 @@
           let res = reader.result
 
           let zip = new JSZip()
+          var xml1
           var xml
 
           var csv
@@ -923,15 +924,17 @@
           for (var i=0; lines.length; i++) {
             csv = lines[i]
             console.log(csv)
-            xml = csv.trim().replace('"', '')
-            // zip.file('video_1_' + i + '.xml', xml)
+            xml1 = csv.replace('"', '')
+            xml = xml1.replace('"', '')
+
+            zip.file('video_1_' + i + '.xml', xml)
           }
 
-//          let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
-//          zip.generateInternalStream({type: 'uint8array', streamFiles: true})
-//            .on('data', data => writeStream.write(data))
-//          .on('end', () => writeStream.close())
-//          .resume()
+          let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
+          zip.generateInternalStream({type: 'uint8array', streamFiles: true})
+            .on('data', data => writeStream.write(data))
+          .on('end', () => writeStream.close())
+          .resume()
 
         }
         // start reading the file. When it is done, calls the onload event defined above.
