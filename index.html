@@ -915,7 +915,12 @@
         reader.onload= function () {
           let res = reader.result
           console.log('result !!')
-          console.log(res)
+
+
+          var lines = res.split('\n')
+          console.log(lines[0])
+          console.log(lines[1])
+
         }
         // start reading the file. When it is done, calls the onload event defined above.
         reader.readAsBinaryString(xmlFile.files[0])
