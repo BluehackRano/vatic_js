@@ -127,7 +127,8 @@
         <!--<p>To start a new video annotation, select a video file: <input type="file" id="videoFile" accept="video/*" /></p>-->
         <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
         <p>Select a VIDEO file >>> <input type="file" id="videoFile" accept="video/*" /></p>
-        <p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>
+        <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
+        <p>To resume a previous annotation, select a frames zip archive: <input type="file" id="xmlFile" accept=".csv" /></p>
         <p>Note: Keep the focus on the browser during the entire extraction process, or frames might be skipped.</p>
         <p class="output" id="videoDimensions"></p>
         <p class="output" id="extractionProgress"></p>
@@ -137,8 +138,8 @@
         <p>Download the extracted IMAGE frames zip archive >>> <input type="button" id="downloadFrames" value="Get frames zip archive" disabled="disabled" /></p>
       </li>
       <li>
-        <!--<p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="true" /></p>-->
-        <p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv"/></p>
+        <p>Optional: Load an existing XML annotation file: <input type="file" id="zipFile" accept=".csv" disabled="true" /></p>
+        <p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="false" /></p>
       </li>
         <!--<p>This is useful for example if:</p>-->
         <!--<ul>-->
