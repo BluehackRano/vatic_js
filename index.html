@@ -917,7 +917,8 @@
           console.log('!!!!')
 
 
-          var lines = res.split('\n').trim()
+          var lines = res.split('\n')
+
           console.log(lines[0])
           console.log(lines[1])
 
@@ -927,7 +928,7 @@
           var xml = lines[0].trim().replace('"', '').replace('"', '')
           //zip.file(videoName + '_' + i + '.xml', xml)
           zip.file('1111_' + 0 + '.xml', xml)
-          xml = lines[1].replace('"', '').replace('"', '')
+          xml = lines[1].trim().replace('"', '').replace('"', '')
           zip.file('1111_' + 1 + '.xml', xml)
 
           let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
