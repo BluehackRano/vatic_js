@@ -128,7 +128,7 @@
         <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
         <p>Select a VIDEO file >>> <input type="file" id="videoFile" accept="video/*" /></p>
         <!--<p>To resume a previous annotation, select a frames zip archive: <input type="file" id="zipFile" accept=".zip" /></p>-->
-        <p>To resume a previous annotation, select a frames XML archive: <input type="file" id="xmlFile" accept=".csv" /></p>
+        <p>To resume a previous annotation, select a frames CSV archive: <input type="file" id="xmlFile" accept=".csv" /></p>
         <p>Note: Keep the focus on the browser during the entire extraction process, or frames might be skipped.</p>
         <p class="output" id="videoDimensions"></p>
         <p class="output" id="extractionProgress"></p>
@@ -912,29 +912,37 @@
         }
 
         var reader = new FileReader();
-        reader.onload = (e) =>
-        {
-
-          console.log('HERER!!!!')
-
-          if (e.target.readyState != 2) {
-            console.log('here 222')
-            return;
-          }
-
-          if (e.target.error) {
-            console.log('here 333')
-            throw 'file reader error';
-          }
-
-
-          console.log('here 444')
-          console.log(e.target.result)
-
-          var csv = $.csv.toObjects(e.target.result)
-          console.log(csv)
-
+        reader.onload= function () {
+          let res = reader.result
+          console.log('result !!')
+          console.log(res)
         }
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsBinaryString(fileInput.files[0])
+
+//        reader.onload = (e) =>
+//        {
+//
+//          console.log('HERER!!!!')
+//
+//          if (e.target.readyState != 2) {
+//            console.log('here 222')
+//            return;
+//          }
+//
+//          if (e.target.error) {
+//            console.log('here 333')
+//            throw 'file reader error';
+//          }
+//
+//
+//          console.log('here 444')
+//          console.log(e.target.result)
+//
+//          var csv = $.csv.toObjects(e.target.result)
+//          console.log(csv)
+//
+//        }
 
         console.log('!!!!!!!')
       }
