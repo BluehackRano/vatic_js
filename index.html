@@ -137,7 +137,8 @@
         <p>Download the extracted IMAGE frames zip archive >>> <input type="button" id="downloadFrames" value="Get frames zip archive" disabled="disabled" /></p>
       </li>
       <li>
-        <p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="true" /></p>
+        <!--<p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="true" /></p>-->
+        <p>Optional: Load an existing XML annotation file: <input type="file" id="xmlFile" accept=".csv" disabled="false" /></p>
       </li>
         <!--<p>This is useful for example if:</p>-->
         <!--<ul>-->
@@ -900,6 +901,7 @@
 
       function importXml() {
         if (this.files.length != 1) {
+          console.log('here 111')
           return;
         }
 
@@ -907,13 +909,18 @@
         reader.onload = (e) =>
         {
           if (e.target.readyState != 2) {
+            console.log('here 222')
             return;
           }
 
           if (e.target.error) {
+            console.log('here 333')
             throw 'file reader error';
           }
 
+
+          console.log('here 444')
+          console.log(e.target.result)
 
           var csv = $.csv.toObjects(e.target.result)
           console.log(csv)
