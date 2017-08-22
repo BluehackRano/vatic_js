@@ -929,8 +929,8 @@
 
 
           for (let i = 0; i < leng; i++) {
-            console.log(lines[i].trim().replace('"', '').replace('"', ''))
-
+            // console.log()
+            zip.file('video_1_' + i + '.xml', lines[i].trim().replace('"', '').replace('"', ''))
           }
 
 
@@ -952,11 +952,11 @@
           // zip.file('video_1_' + i + '.xml', xml)
           // zip.file('video_1_0.xml', xml)
 
-//          let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
-//          zip.generateInternalStream({type: 'uint8array', streamFiles: true})
-//            .on('data', data => writeStream.write(data))
-//          .on('end', () => writeStream.close())
-//          .resume()
+          let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
+          zip.generateInternalStream({type: 'uint8array', streamFiles: true})
+            .on('data', data => writeStream.write(data))
+          .on('end', () => writeStream.close())
+          .resume()
 
         }
         // start reading the file. When it is done, calls the onload event defined above.
