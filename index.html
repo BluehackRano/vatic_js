@@ -914,22 +914,15 @@
         var reader = new FileReader();
         reader.onload= function () {
           let res = reader.result
-          console.log('!!!!')
-
-
-          var lines = res.split('\n')
-
-          console.log(lines[0])
-          console.log(lines[1])
 
           let zip = new JSZip()
-          let processed = 0
+          var xml
 
-          var xml = lines[0].trim().replace('"', '').replace('"', '')
-          //zip.file(videoName + '_' + i + '.xml', xml)
-          zip.file('1111_' + 0 + '.xml', xml)
-          xml = lines[1].trim().replace('"', '').replace('"', '')
-          zip.file('1111_' + 1 + '.xml', xml)
+          var lines = res.split('\n')
+          for (var i=0; lines.length; i++) {
+            xml = lines[i].trim().replace('"', '').replace('"', '')
+            zip.file('video_1_' + i + '.xml', xml)
+          }
 
           let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
           zip.generateInternalStream({type: 'uint8array', streamFiles: true})
