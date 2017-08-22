@@ -904,7 +904,7 @@
 
       function importXml() {
 
-        alert('??????')
+        alert('xxxxxxxx')
 
         if (this.files.length != 1) {
           console.log('here 111')
@@ -914,17 +914,17 @@
         var reader = new FileReader();
         reader.onload= function () {
           let res = reader.result
-          console.log('result !!')
+          console.log('!!!!')
 
 
-          var lines = res.split('\n')
+          var lines = res.split('\n').trim()
           console.log(lines[0])
           console.log(lines[1])
 
           let zip = new JSZip()
           let processed = 0
 
-          var xml = lines[0].replace('"', '').replace('"', '')
+          var xml = lines[0].trim().replace('"', '').replace('"', '')
           //zip.file(videoName + '_' + i + '.xml', xml)
           zip.file('1111_' + 0 + '.xml', xml)
           xml = lines[1].replace('"', '').replace('"', '')
