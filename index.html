@@ -924,11 +924,11 @@
           let zip = new JSZip()
           let processed = 0
 
-          var xml = lines[0].replace('"\n', '')
+          var xml = lines[0].replace('"', '')
           //zip.file(videoName + '_' + i + '.xml', xml)
           zip.file('1111_' + 0 + '.xml', xml)
           xml = lines[1].replace('"', '')
-          zip.file('2222_' + 1 + '.xml', xml)
+          zip.file('1111_' + 1 + '.xml', xml)
 
           let writeStream = streamSaver.createWriteStream(videoName + '.zip').getWriter();
           zip.generateInternalStream({type: 'uint8array', streamFiles: true})
