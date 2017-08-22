@@ -447,7 +447,9 @@
 
         videoFile.disabled = true;
         zipFile.disabled = true;
-        xmlFile.disabled = true;
+        // rano
+        // xmlFile.disabled = true;
+        xmlFile.disabled = false;
         downloadFramesButton.disabled = true;
         generateXmlButton.disabled = true;
         clearAllAnnotatedObjects();
@@ -900,6 +902,9 @@
 //      }
 
       function importXml() {
+
+        alert('??????')
+
         if (this.files.length != 1) {
           console.log('here 111')
           return;
